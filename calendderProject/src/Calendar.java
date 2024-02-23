@@ -19,10 +19,8 @@ public class Calendar{
 	public static final String ERR_EVENT_NOT_FOUND = "Event does not exist.";
 	public static final String ERR_CREATE = "Event could not be created.";
 	
-	public static final String HELP = "Your commands are:\n\nhelp\ndisplayMonth\ndisplayDay\ncreateEvent\neditEvent\ndeleteEvent\ndone";
-	public static final String ENTER = "Enter your command: ";
-	
-	public static final String help = "help";
+	public static final String HELP = "Your commands are:\n\nhelp\ndisplayMonth\ndisplayDay\ncreateEvent\neditEvent\ndeleteEvent\ndone\n";
+	public static final String ENTER = "Enter your command: \n";
 	
 	public static void main(String[] args) {
 		Scanner input = new Scanner (System.in);
@@ -31,15 +29,40 @@ public class Calendar{
 		
 		System.out.println("Welcome to your Planner.");
 		System.out.println(HELP);
-		lastInput = input.next();
 		
 		while (done == false){
+			
+			System.out.println(ENTER);
 			lastInput = input.next();
-			System.out.println(lastInput);
-			if (lastInput.equals(help)) {
+
+			if (lastInput.equals("help")) {
 				System.out.println(HELP);
 			}
+			if (lastInput.equals("displayMonth")) {
+				System.out.println(ERR_MONTH);
+			}
+			if (lastInput.equals("displayDay")) {
+				System.out.println(ERR_DATE);
+			}
+			if (lastInput.equals("createEvent")) {
+				System.out.println(ERR_CREATE);
+			}
+			if (lastInput.equals("deleteEvent")){
+				System.out.println(ERR_EVENT_NOT_FOUND);
+			}
+			if (lastInput.equals("editEvent")){
+				System.out.println(ERR_EVENT_NOT_FOUND);
+			}
+			if (lastInput.equals("done")){
+				System.out.println("Are you sure you want to exit? (Y/N)");
+				if (input.next().toUpperCase().equals("Y")){
+					done = true;
+				}
+			}
 		}
+		
+		System.out.println("Done!");
+		input.close();
 		
 	}
 }
