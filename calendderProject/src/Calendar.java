@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+
+import java.io.FileNotFoundException;
 
 public class Calendar{
 	
@@ -16,11 +19,24 @@ public class Calendar{
 	public static final String ERR_INVALID = "Invalid command. Type \"help\" for the list of valid commands.";
 	public static final String ERR_MONTH = "Invalid month (should be between 1-12).";
 	public static final String ERR_DATE = "Invalid date.";
-	public static final String ERR_EVENT_NOT_FOUND = "Event does not exist.";
+	public static final String ERR_EVENT_NOT_FOUND = "Event(s) does not exist.";
 	public static final String ERR_CREATE = "Event could not be created.";
+	public static final String FILE_NOT_FOUND = "Event file could not be found.";
 	
-	public static final String HELP = "Your commands are:\n\nhelp\ndisplayMonth\ndisplayDay\ncreateEvent\neditEvent\ndeleteEvent\ndone\n";
+	public static final String HELP = "Your commands are:\n\nhelp\ndisplayMonth\ndisplayDay\ndisplayEvents\ncreateEvent\neditEvent\ndeleteEvent\ndone\n";
 	public static final String ENTER = "Enter your command: \n";
+	
+	public static void displayMonth(int month, int year, ArrayList<String> events) {
+		
+	}
+	
+	public static void displayDay(int day, int month, int year, ArrayList<String> events) {
+		
+	}
+	
+	public static void displayEvents(ArrayList<String> events) {
+		
+	}
 	
 	public static void main(String[] args) {
 		Scanner input = new Scanner (System.in);
@@ -58,6 +74,9 @@ public class Calendar{
 				if (input.next().toUpperCase().equals("Y")){
 					done = true;
 				}
+			}
+			if (lastInput.equals("displayEvents")) {
+				System.out.println(ERR_EVENT_NOT_FOUND);
 			}
 		}
 		

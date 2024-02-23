@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class createEvents{
 	
-	ArrayList<String> events = new ArrayList<>();
+	public ArrayList<String> events = new ArrayList<>();
 	
 	public static String createEvent(){
 		return null;
@@ -15,4 +15,6 @@ public class createEvents{
 	public static void deleteEvent() {
 		
 	}
+	
+	
 }
