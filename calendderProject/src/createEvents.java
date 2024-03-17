@@ -49,7 +49,7 @@ public class createEvents{
 	}
 	
 	 /**
-     * Method to retrieve the list of events.
+     * Method that retrieves the list of events.
      *
      * @return ArrayList containing events
      */

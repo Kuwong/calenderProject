@@ -22,7 +22,7 @@ public class Calendar {
 	public static final String ENTER = "Enter your command: \n";
 
 	/**
-	 * Displays the calendar view of a month, and displays any events for that month
+	 * Display the calendar view of a month, and displays any events for that month
 	 * underneath.
 	 * 
 	 * @param month
