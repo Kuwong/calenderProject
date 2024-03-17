@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class createEvents{
 	
@@ -8,10 +9,17 @@ public class createEvents{
 	/**
 	 * Asks user for input and turns info into a String to be stored in the ArrayList.
 	 * 
+	 * @param input
 	 * @return String to be stored in the ArrayList
 	 */
-	public static String createEvent(){
-		return null;
+	public static String createEvent(Scanner input){
+		System.out.println("Enter event date (format: DD/MM/YYYY): ");
+        String date = input.next();
+        System.out.println("Enter event title: ");
+        String title = input.next();
+        System.out.println("Enter event description: ");
+        String description = input.next();
+        return date + " | " + title + " | " + description;
 	}
 	
 	/**
@@ -26,10 +34,26 @@ public class createEvents{
 	/**
 	 * Takes user input and deletes the specified event from the ArrrayList.
 	 * 
+	 * @param input
+	 * @param events
 	 */
-	public static void deleteEvent() {
-		
+	public static void deleteEvent(Scanner input, ArrayList<String> events) {
+		System.out.println("Enter event index to delete: ");
+        int index = input.nextInt();
+        if (index >= 0 && index < events.size()) {
+            events.remove(index);
+            System.out.println("Event deleted successfully.");
+        } else {
+            System.out.println("Invalid event index.");
+        }
 	}
 	
-	
+	 /**
+     * Method to retrieve the list of events.
+     *
+     * @return ArrayList containing events
+     */
+    public ArrayList<String> getEvents() {
+        return events;
+    }
 }
