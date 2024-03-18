@@ -13,15 +13,16 @@ public class createEvents{
 	 * @return String to be stored in the ArrayList
 	 */
 	public static String createEvent(Scanner input){
-		System.out.println("Enter event date (format: DD/MM/YYYY): ");
-        String date = input.next();
+		Scanner input2 = new Scanner(System.in);
+		System.out.println("Enter event date (format: MM/DD/YYYY): ");
+        String date = input2.nextLine();
         if (date.length() != 10 || !date.matches("[/0-9]+")) {
         	return "ERROR";
         }
         System.out.println("Enter event title: ");
-        String title = input.next();
+        String title = input2.nextLine();
         System.out.println("Enter event description: ");
-        String description = input.next();
+        String description = input2.nextLine();
         return date + " | " + title + " | " + description;
 	}
 	
@@ -31,13 +32,14 @@ public class createEvents{
 	 * @return String to use to overwrite in the ArrayList
 	 */
 	public static String editEvent(String event, Scanner input) {
+		Scanner input3 = new Scanner(System.in);
 		String oldDate = event.substring(0, 10);
 		String oldTitleAndDescription = event.substring(13);
 		String newDate, newTitle, newDescription, newTitleAndDescription;
 		System.out.println("Would you like to change the date? (Y/N)");
-		if (input.next().toUpperCase().equals("Y")) {
+		if (input3.nextLine().toUpperCase().equals("Y")) {
 			System.out.println("Enter new date");
-			String newInput = input.next();
+			String newInput = input3.nextLine();
 			if (newInput.length() != 10 || !newInput.matches("[/0-9]+")) {
 				return "ERROR";
 		    }
@@ -47,11 +49,11 @@ public class createEvents{
 			newDate = oldDate;
 		}
 		System.out.println("Would you like to change the title or description? (Y/N)");
-		if (input.next().toUpperCase().equals("Y")) {
+		if (input3.nextLine().toUpperCase().equals("Y")) {
 			System.out.println("Enter new title:");
-			newTitle = input.next();
+			newTitle = input3.nextLine();
 			System.out.println("Enter new description:");
-			newDescription = input.next();
+			newDescription = input3.nextLine();
 			newTitleAndDescription = newTitle + " | " + newDescription;
 		}
 		else {
