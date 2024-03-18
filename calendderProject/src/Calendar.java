@@ -5,10 +5,6 @@ import java.util.ArrayList;
 
 public class Calendar {
 
-	/**
-	 * Commands: help displayMonth displayDay createEvent editEvent deleteEvent done
-	 */
-
 	// Error message strings
 	public static final String ERR_INVALID = "Invalid command. Type \"help\" for the list of valid commands.";
 	public static final String ERR_MONTH = "Invalid month (should be between 1-12).";
@@ -29,7 +25,7 @@ public class Calendar {
 	 * @param year
 	 * @param events
 	 */
-	public static void displayMonth(int month, int year, ArrayList<String> events) {
+	public static void displayMonth(int month, int year) {
 		//Prints the month and year as a header
         System.out.println("   " + getMonthName(month) + " " + year);
         System.out.println(" S  M  T  W  T  F  S");
@@ -104,7 +100,15 @@ public class Calendar {
 	 * @param events
 	 */
 	public static void displayDay(int day, int month, int year, ArrayList<String> events) {
-
+		 for (int i = 0; i < events.size(); i++) {
+			String eventAt = events.get(i);
+		    int monthAtI = (Character.getNumericValue(eventAt.charAt(0)) * 10 + Character.getNumericValue(eventAt.charAt(1)));
+		    int dayAtI = (Character.getNumericValue(eventAt.charAt(3)) * 10 + Character.getNumericValue(eventAt.charAt(4)));
+		    int yearAtI = (Character.getNumericValue(eventAt.charAt(6)) * 1000 + (int) Character.getNumericValue(eventAt.charAt(7)) * 100 + Character.getNumericValue(eventAt.charAt(8)) * 10 + Character.getNumericValue(eventAt.charAt(9)));
+		    if ((monthAtI == month) && (yearAtI == year) && (dayAtI == day)) {
+		    	System.out.println(eventAt);
+		    }
+		 }
 	}
 
 	/**
@@ -165,14 +169,31 @@ public class Calendar {
 				    }
 				    System.out.println("Enter year: ");
 				    int displayYear = input.nextInt();
-				    displayMonth(displayMonth, displayYear, events);
-					System.out.println(ERR_MONTH);
+				    displayMonth(displayMonth, displayYear);
+				    // Displays events for that month
+				    System.out.println();
+				    System.out.println("   Events");
+				    for (int i = 0; i < events.size(); i++) {
+				    	String eventAt = events.get(i);
+				    	int monthAtI = (Character.getNumericValue(eventAt.charAt(0)) * 10 + Character.getNumericValue(eventAt.charAt(1)));
+				    	int yearAtI = (Character.getNumericValue(eventAt.charAt(6)) * 1000 + (int) Character.getNumericValue(eventAt.charAt(7)) * 100 + Character.getNumericValue(eventAt.charAt(8)) * 10 + Character.getNumericValue(eventAt.charAt(9)));
+				    	if ((monthAtI == displayMonth) && (yearAtI == displayYear)) {
+				    		System.out.println(eventAt);
+				    	}
+				    }
+				    System.out.println();
 					break;
 					
 				// Asks for day, month, and year and passes these parameters to displayDay
 				// method.
 				case "displayDay":
-					System.out.println(ERR_DATE);
+					System.out.println("Enter month (mm): ");
+				    int displayMonth2 = input.nextInt();
+				    System.out.println("Enter day (dd): ");
+				    int displayDay = input.nextInt();
+				    System.out.println("Enter year (yyyy): ");
+				    int displayYear2 = input.nextInt();
+				    displayDay(displayDay, displayMonth2, displayYear2, events);
 					break;
 					
 				// Calls createEvent method in the createEvents class.
@@ -184,24 +205,22 @@ public class Calendar {
 					} else {
 						System.out.println(ERR_CREATE);
 					}
-					// System.out.println(ERR_CREATE);
 					break;
 					
 				// Calls deleteEvent method in the createEvents class.
 				case "deleteEvent":
+					displayEvents(events);
 					createEvents.deleteEvent(input, events);
-					System.out.println(ERR_EVENT_NOT_FOUND);
 					break;
 					
 				// Calls editEvent method in the createEvent class.
 				case "editEvent":
-					System.out.println(ERR_EVENT_NOT_FOUND);
+					
 					break;
 					
 				// Calls displayEvents method.
 				case "displayEvents":
 					displayEvents(events);
-					System.out.println(ERR_EVENT_NOT_FOUND);
 					break;
 					
 				// Asks for verification, then saves events ArrayList to File with updateFile
