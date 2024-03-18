@@ -15,6 +15,9 @@ public class createEvents{
 	public static String createEvent(Scanner input){
 		System.out.println("Enter event date (format: DD/MM/YYYY): ");
         String date = input.next();
+        if (date.length() != 10 || !date.matches("[/0-9]+")) {
+        	return "ERROR";
+        }
         System.out.println("Enter event title: ");
         String title = input.next();
         System.out.println("Enter event description: ");
@@ -27,9 +30,34 @@ public class createEvents{
 	 * 
 	 * @return String to use to overwrite in the ArrayList
 	 */
-	public static String editEvent() {
-		
-		return null;
+	public static String editEvent(String event, Scanner input) {
+		String oldDate = event.substring(0, 10);
+		String oldTitleAndDescription = event.substring(13);
+		String newDate, newTitle, newDescription, newTitleAndDescription;
+		System.out.println("Would you like to change the date? (Y/N)");
+		if (input.next().toUpperCase().equals("Y")) {
+			System.out.println("Enter new date");
+			String newInput = input.next();
+			if (newInput.length() != 10 || !newInput.matches("[/0-9]+")) {
+				return "ERROR";
+		    }
+			newDate = newInput;
+		}
+		else {
+			newDate = oldDate;
+		}
+		System.out.println("Would you like to change the title or description? (Y/N)");
+		if (input.next().toUpperCase().equals("Y")) {
+			System.out.println("Enter new title:");
+			newTitle = input.next();
+			System.out.println("Enter new description:");
+			newDescription = input.next();
+			newTitleAndDescription = newTitle + " | " + newDescription;
+		}
+		else {
+			newTitleAndDescription = oldTitleAndDescription;
+		}
+		return (newDate + " | " + newTitleAndDescription);
 	}
 	
 	/**
