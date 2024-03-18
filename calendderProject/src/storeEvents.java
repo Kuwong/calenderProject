@@ -43,7 +43,7 @@ public class storeEvents{
 	 * @param input
 	 * @return ArrayList to be used by the createEvents class.
 	 */
-	public static ArrayList<String> readFile(Scanner input){
+	public static ArrayList<String> readFile(){
 	    ArrayList<String> events = new ArrayList<>();
 	    try {
 	        File file = new File(FILENAME);
@@ -54,7 +54,6 @@ public class storeEvents{
 	        }
 	        scanner.close();
 	    } catch (FileNotFoundException e) {
-	        System.out.println(FILE_NOT_FOUND); 
 	    }
 	    return events;
 	}
