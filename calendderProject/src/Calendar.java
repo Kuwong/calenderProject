@@ -10,7 +10,7 @@ public class Calendar {
 	public static final String ERR_MONTH = "Invalid month (should be between 1-12).";
 	public static final String ERR_DATE = "Invalid date.";
 	public static final String ERR_EVENT_NOT_FOUND = "Event(s) does not exist.";
-	public static final String ERR_CREATE = "Event could not be created.";
+	public static final String ERR_CREATE = "Event could not be created. Please ensure date is valid (Contains only numbers and \"/\" and is in format of mm/dd/yyyy)";
 	public static final String FILE_NOT_FOUND = "Event file could not be found.";
 
 	// Misc message strings
@@ -100,15 +100,20 @@ public class Calendar {
 	 * @param events
 	 */
 	public static void displayDay(int day, int month, int year, ArrayList<String> events) {
-		 for (int i = 0; i < events.size(); i++) {
+		boolean found = false; 
+		for (int i = 0; i < events.size(); i++) {
 			String eventAt = events.get(i);
 		    int monthAtI = (Character.getNumericValue(eventAt.charAt(0)) * 10 + Character.getNumericValue(eventAt.charAt(1)));
 		    int dayAtI = (Character.getNumericValue(eventAt.charAt(3)) * 10 + Character.getNumericValue(eventAt.charAt(4)));
 		    int yearAtI = (Character.getNumericValue(eventAt.charAt(6)) * 1000 + (int) Character.getNumericValue(eventAt.charAt(7)) * 100 + Character.getNumericValue(eventAt.charAt(8)) * 10 + Character.getNumericValue(eventAt.charAt(9)));
 		    if ((monthAtI == month) && (yearAtI == year) && (dayAtI == day)) {
 		    	System.out.println(eventAt);
+		    	found = true;
 		    }
 		 }
+		if (found == false) {
+			System.out.println(ERR_EVENT_NOT_FOUND);
+		}
 	}
 
 	/**
@@ -118,10 +123,10 @@ public class Calendar {
 	 */
 	public static void displayEvents(ArrayList<String> events) {
 		if (events.isEmpty()) {
-            System.out.println("No events found.");
+            System.out.println(ERR_EVENT_NOT_FOUND);
         } else {
-            for (String event : events) {
-                System.out.println(event);
+            for (int i = 0; i < events.size(); i++) {
+                System.out.println(i + ") " + events.get(i));
             }
         }
 	}
@@ -144,7 +149,7 @@ public class Calendar {
 		System.out.println("Welcome to your Planner.");
 		System.out.println(HELP);
 
-		ArrayList<String> events = new ArrayList<>();
+		ArrayList<String> events = storeEvents.readFile();
 
 		while (done == false) {
 
@@ -199,7 +204,7 @@ public class Calendar {
 				// Calls createEvent method in the createEvents class.
 				case "createEvent":
 					String newEvent = createEvents.createEvent(input);
-					if (newEvent != null) {
+					if (!newEvent.equals("ERROR")) {
 						events.add(newEvent);
 						System.out.println("Event created successfully.");
 					} else {
@@ -209,13 +214,27 @@ public class Calendar {
 					
 				// Calls deleteEvent method in the createEvents class.
 				case "deleteEvent":
-					displayEvents(events);
-					createEvents.deleteEvent(input, events);
+					if (events.isEmpty()) {
+			            System.out.println(ERR_EVENT_NOT_FOUND);
+			        }
+					else {
+						displayEvents(events);
+						createEvents.deleteEvent(input, events);
+					}
 					break;
 					
 				// Calls editEvent method in the createEvent class.
 				case "editEvent":
-					
+					displayEvents(events);
+					System.out.println("Enter event index to edit: ");
+					int editIndex = input.nextInt();
+					String newEvent1 = createEvents.editEvent(events.get(editIndex), input);
+					if (newEvent1.equals("ERROR")) {
+						System.out.println(ERR_CREATE);
+					}
+					else {
+						events.set(editIndex, newEvent1);
+					}
 					break;
 					
 				// Calls displayEvents method.
@@ -228,6 +247,7 @@ public class Calendar {
 				case "done":
 					System.out.println("Are you sure you want to exit? (Y/N)");
 					if (input.next().toUpperCase().equals("Y")) {
+						storeEvents.updateFile(events);
 						done = true;
 					}
 					break;
